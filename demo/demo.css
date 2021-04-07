@@ -1,0 +1,99 @@
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	--fgColor: #E9E2CB;
+	--bgColor: #002731;
+
+	color: var(--fgColor);
+	background-color: var(--bgColor);
+
+	font-size: 12pt;
+	letter-spacing: 0.1em;
+	--ansiBlink: ansi-blink 2s infinite;
+
+	--base-font: 'consolas';
+
+	--alt-font-no-11: 'anonymous pro';
+	--alt-font-no-12: 'courier ';
+	--alt-font-no-13: 'courier new';
+	--alt-font-no-14: 'vcr osd mono';
+	--alt-font-no-15: 'glass tty vt2020';
+	--alt-font-no-15: 'andale mono';
+	--alt-font-no-15: 'noto mono';
+	--alt-font-no-15: 'free mono';
+	--alt-font-no-15: 'liberation mono';
+
+	--alt-font-fraktur: 'Mathjax_Fraktur';
+
+	font-family: var(--base-font);
+
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.25), 0px 0px 2px rgba(0,0,0,0.5);
+}
+
+h1 {
+	padding: 0.25em;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+#options {
+	background: #999;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 0.5em;
+	display: flex;
+	flex-direction: row;
+	color: black;
+	text-shadow: none;
+}
+
+textarea {
+	margin: 0;
+	min-width: 100%;
+	min-height: 8em;
+	max-height: 50%;
+	overflow: auto;
+}
+
+body > * {
+	overflow: auto;
+}
+
+#output {
+	display: block;
+	padding: 0.5em;
+}
+
+#output > * {
+	/*opacity: 0.8;*/
+}
+
+.ansi:empty {
+	display: none;
+}
+
+.ansi:not(:empty) {
+	display: inline-block;
+	height: 1.5em;
+	line-height: 1.5em;
+	white-space: pre;
+}
+
+@keyframes ansi-blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 1;
+	}
+	85% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
