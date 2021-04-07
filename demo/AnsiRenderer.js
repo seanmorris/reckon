@@ -10,7 +10,7 @@ export const AnsiRenderer = new Transformer({
 
 		if(typeof chunk === 'string')
 		{
-			if(chunk === '\\' || chunk === '')
+			if(chunk === '')
 			{
 				return false;
 			}
@@ -48,12 +48,15 @@ export const AnsiRenderer = new Transformer({
 							break;
 
 						case 1:
-							style['filter'] = 'brightness(1.5) contrast(0.5)';
+							style['filter'] = 'brightness(1.25) contrast(1.25)';
+							// style['text-shadow'] = '1px 1px 0px currentColor';
+							style['font-weight'] = 'bold';
 							style['opacity'] = 1;
 							break;
 
 						case 2:
-							style['filter'] = 'brightness(0.5) contrast(1.5)';
+							style['filter'] = 'brightness(0.75)';
+							style['font-weight'] = 'light';
 							style['opacity'] = 0.75;
 							break;
 
@@ -74,6 +77,7 @@ export const AnsiRenderer = new Transformer({
 							break;
 
 						case 8:
+							style['filter'] = 'contrast(0.5)';
 							style['opacity'] = 0.1;
 							break;
 
@@ -99,6 +103,7 @@ export const AnsiRenderer = new Transformer({
 
 						case 20:
 							style['font-family'] = 'var(--alt-font-fraktur)';
+							style['font-size'] = '1.1rem';
 							break;
 
 						case 21:
@@ -167,21 +172,23 @@ export const AnsiRenderer = new Transformer({
 
 						case 38:
 
-							if(chunk.groups[1] == 2)
+							if(chunk.groups[1 + g] == 2)
 							{
-								const [r,g,b] = chunk.groups[2].split(';');
+								const [rd,gr,bl] = chunk.groups[2 + g].split(';');
 
-								style['color'] = `rgb(${r},${g},${b})`;
+								style['color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
-							if(chunk.groups[1] == 5)
+							if(chunk.groups[1 + g] == 5)
 							{
-								const {r,g,b} = Colors255[ Number(chunk.groups[2]) ];
+								console.log(chunk.groups, g);
 
-								style['color'] = `rgb(${r},${g},${b})`;
+								const {r:rd,g:gr,b:bl} = Colors255[ Number(chunk.groups[2 + g]) ];
+
+								style['color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
-							g += 4;
+							g += 2;
 
 							break;
 
@@ -225,19 +232,19 @@ export const AnsiRenderer = new Transformer({
 
 							if(chunk.groups[1 + g] == 2)
 							{
-								const [r,g,b] = chunk.groups[2 + g].split(';');
+								const [rd,gr,bl] = chunk.groups[2 + g].split(';');
 
-								style['background-color'] = `rgb(${r},${g},${b})`;
+								style['background-color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
 							if(chunk.groups[1 + g] == 5)
 							{
-								const {r,g,b} = Colors255[ Number(chunk.groups[2 + g]) ];
+								const {r:rd,g:gr,b:bl} = Colors255[ Number(chunk.groups[2 + g]) ];
 
-								style['background-color'] = `rgb(${r},${g},${b})`;
+								style['background-color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
-							g += 4;
+							g += 2;
 
 							break;
 
@@ -255,7 +262,7 @@ export const AnsiRenderer = new Transformer({
 							break;
 
 						case 53:
-							style['border-top'] = '1px solid currentColor';
+							style['text-decoration'] = 'overline';
 							break;
 
 						case 54:
@@ -273,3 +280,10 @@ export const AnsiRenderer = new Transformer({
 		}
 	}
 });
+
+AnsiRenderer.reset = () => {
+	for(const key in style)
+	{
+		delete style[key];
+	}
+};

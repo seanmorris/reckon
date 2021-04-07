@@ -11,39 +11,41 @@ const refresh = (box, source, escaped) => {
 	}
 
 	const lines  = source.split(/\n/);
+	
+	let tokens;
+	
+	if(escaped)
+	{
+		tokens = {
+			reset:         /\\e\[(0);?m/
+			, esc:         /\\e\[(\d+);?(\d+)?;?([\d;]*)?./
+			, characters:  /.+?(?=\\e|$)/
+		};
+	}
+	else
+	{
+		tokens = {
+			reset:         /\u001b\[(0);?m/
+			, esc:         /\u001b\[(\d+);?(\d+)?;?([\d;]*)?./
+			, characters:  /.+?(?=\u001b|$)/
+		};
+	}
 
+	const modes  = {
+		normal:{
+			reset: [IGNORE, ENTER, LEAVE]
+			, esc: [IGNORE, ENTER, LEAVE]
+			, characters: [INSERT]
+		},
+	}
+	
+	const AnsiParser = new Parser(tokens, modes);
+	
 	lines.map(line => {
 
-		const modes  = {
-			normal:{
-				reset: [IGNORE, ENTER, LEAVE]
-				, esc: [IGNORE, ENTER, LEAVE]
-				, characters: [INSERT]
-			},
-		}
+		AnsiRenderer.reset();
 
-		let tokens;
-		
-		if(escaped)
-		{
-			tokens = {
-				reset:         /\\e\[(0);?m/
-				, esc:         /\\e\[(\d+);?(\d+)?;?([\d;]*)?./
-				, characters:  /.+?(?=\\e|$)/
-			};
-		}
-		else
-		{
-			tokens = {
-				reset:         /\u001b\[(0);?m/
-				, esc:         /\u001b\[(\d+);?(\d+)?;?([\d;]*)?./
-				, characters:  /.+?(?=\u001b|$)/
-			};
-		}
-
-		const AnsiParser = new Parser(tokens, modes);
-
-		const syntax = AnsiParser.parse(line);			
+		const syntax = AnsiParser.parse(line);
 		const output = AnsiRenderer.process(syntax);
 
 		const div = document.createElement('div');

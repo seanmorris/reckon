@@ -15,23 +15,23 @@ body {
 	letter-spacing: 0.1em;
 	--ansiBlink: ansi-blink 2s infinite;
 
-	--base-font: 'consolas';
+	--base-font: 'perfect_dos_vga_437regular';
 
-	--alt-font-no-11: 'anonymous pro';
-	--alt-font-no-12: 'courier ';
-	--alt-font-no-13: 'courier new';
+	--alt-font-no-11: 'w95faregular';
+	--alt-font-no-12: 'monospace';
+	--alt-font-no-13: 'perfect_dos_vga_437regular';
 	--alt-font-no-14: 'vcr osd mono';
 	--alt-font-no-15: 'glass tty vt2020';
-	--alt-font-no-15: 'andale mono';
-	--alt-font-no-15: 'noto mono';
-	--alt-font-no-15: 'free mono';
-	--alt-font-no-15: 'liberation mono';
+	--alt-font-no-16: 'press_start_2pregular';
+	--alt-font-no-17: 'w95faregular';
+	--alt-font-no-18: '8bit_wondernominal';
+	--alt-font-no-19: 'dogica_pixelregular';
 
-	--alt-font-fraktur: 'Mathjax_Fraktur';
+	--alt-font-fraktur: 'alagardmedium';
 
 	font-family: var(--base-font);
 
-	text-shadow: 1px 1px 0px rgba(0,0,0,0.25), 0px 0px 2px rgba(0,0,0,0.5);
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.25), 0px 0px 2px rgba(0,0,0,0.25);
 }
 
 h1 {
@@ -59,17 +59,14 @@ textarea {
 	overflow: auto;
 }
 
-body > * {
-	overflow: auto;
-}
-
 #output {
 	display: block;
-	padding: 0.5em;
+	margin: .5em;
 }
 
 #output > * {
-	/*opacity: 0.8;*/
+	max-width: 100%;
+	opacity: 0.95;
 }
 
 .ansi:empty {
@@ -78,9 +75,10 @@ body > * {
 
 .ansi:not(:empty) {
 	display: inline-block;
-	height: 1.5em;
+	min-height: 1.5em;
 	line-height: 1.5em;
-	white-space: pre;
+	word-break: break-word;
+	white-space: pre-wrap;
 }
 
 @keyframes ansi-blink {
