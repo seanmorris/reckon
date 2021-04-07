@@ -54,7 +54,7 @@ h1 {
 textarea {
 	margin: 0;
 	min-width: 100%;
-	min-height: 8em;
+	min-height: 16em;
 	max-height: 50%;
 	overflow: auto;
 }
