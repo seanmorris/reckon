@@ -3,6 +3,8 @@ import { IGNORE, INSERT, ENTER, LEAVE, HOME } from 'Actions';
 
 import { AnsiRenderer } from './AnsiRenderer';
 
+const renderer = new AnsiRenderer;
+
 const refresh = (box, source, escaped) => {
 
 	while(box.firstChild)
@@ -18,7 +20,8 @@ const refresh = (box, source, escaped) => {
 	{
 		tokens = {
 			reset:         /\\e\[(0);?m/
-			, esc:         /\\e\[(\d+);?(\d+)?;?([\d;]*)?./
+			, graphics:    /\\e\[(\d+);?(\d+)?;?([\d;]*)?./
+			, escaped:     /\\([^e])/
 			, characters:  /.+?(?=\\e|$)/
 		};
 	}
@@ -26,15 +29,17 @@ const refresh = (box, source, escaped) => {
 	{
 		tokens = {
 			reset:         /\u001b\[(0);?m/
-			, esc:         /\u001b\[(\d+);?(\d+)?;?([\d;]*)?./
+			, graphics:    /\u001b\[(\d+);?(\d+)?;?([\d;]*)?./
+			, escaped:     /\\([^e])/
 			, characters:  /.+?(?=\u001b|$)/
 		};
 	}
 
 	const modes  = {
 		normal:{
-			reset: [IGNORE, ENTER, LEAVE]
-			, esc: [IGNORE, ENTER, LEAVE]
+			reset:        [IGNORE, ENTER, LEAVE]
+			, escaped:    [IGNORE, ENTER, LEAVE]
+			, graphics:   [IGNORE, ENTER, LEAVE]
 			, characters: [INSERT]
 		},
 	}
@@ -43,10 +48,10 @@ const refresh = (box, source, escaped) => {
 	
 	lines.map(line => {
 
-		AnsiRenderer.reset();
+		renderer.reset();
 
 		const syntax = AnsiParser.parse(line);
-		const output = AnsiRenderer.process(syntax);
+		const output = renderer.process(syntax);
 
 		const div = document.createElement('div');
 
@@ -66,5 +71,5 @@ document.addEventListener('DOMContentLoaded', event => {
 	source.addEventListener('input', event => refresh(box, source.value, escaped.checked));
 	escaped.addEventListener('input', event => refresh(box, source.value, escaped.checked));
 
-	refresh(box, source.value, escaped.checked);
+	refresh(box, source.value, escaped.checked);	
 });

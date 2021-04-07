@@ -4,7 +4,8 @@ import { IGNORE, INSERT, ENTER, LEAVE, HOME } from 'Actions';
 const tokens = {
 	
 	reset:         /\u001b\[(0)m/
-	, esc:         /\u001b\[(\d+);?(\d+)?;?([\d;]*)./
+	, escape:      /\\(.)/
+	, graphics:    /\u001b\[(\d+);?(\d+)?;?([\d;]*)./
 	, characters:  /[^\u001b]+/
 	
 	// reset:         /\\e\[(0)m/
@@ -14,8 +15,9 @@ const tokens = {
 
 const modes  = {
 	normal:{
-		reset: [IGNORE, ENTER, LEAVE]
-		, esc: [IGNORE, ENTER, LEAVE]
+		reset:        [IGNORE, ENTER, LEAVE]
+		, graphics:   [IGNORE, ENTER, LEAVE]
+		, escape:     [IGNORE, ENTER, LEAVE]
 		, characters: [INSERT]
 	},
 }

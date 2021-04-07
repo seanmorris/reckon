@@ -3,11 +3,46 @@ import { Transformer } from 'Transformer';
 import { pallete } from './pallete';
 import { Colors255 } from './Colors255';
 
-const style = {};
+const audio = new AudioContext();
 
-export const AnsiRenderer = new Transformer({
-	normal:   (chunk, parent) => {
+export class AnsiRenderer extends Transformer
+{
+	style = {};
 
+	constructor()
+	{
+		super({
+			normal: (chunk, parent) => this.setGraphicsMode(chunk, parent)
+		})
+	}	
+
+	reset()
+	{
+		for(const [k,] of Object.entries(this.style))
+		{
+			delete this.style[k];
+		}
+	}
+
+	beep()
+	{
+		const oscillator = audio.createOscillator();
+		const gainNode   = audio.createGain();
+
+		oscillator.connect(gainNode);
+		oscillator.frequency.value = 840;
+		oscillator.type="square";
+
+		gainNode.connect(audio.destination);
+
+		gainNode.gain.value = 10 * 0.01;
+		
+		oscillator.start(audio.currentTime)
+		oscillator.stop(audio.currentTime + 200 * 0.001);
+	}
+
+	setGraphicsMode(chunk, parent)
+	{
 		if(typeof chunk === 'string')
 		{
 			if(chunk === '')
@@ -17,7 +52,7 @@ export const AnsiRenderer = new Transformer({
 
 			let styleString = '';
 			
-			for(const [key, val] of Object.entries(style))
+			for(const [key, val] of Object.entries(this.style))
 			{
 				styleString += `${key}: ${val}; `;
 			}
@@ -27,7 +62,12 @@ export const AnsiRenderer = new Transformer({
 
 		if(typeof chunk === 'object')
 		{
-			if(chunk.type === 'esc' || chunk.type === 'reset')
+			if(chunk.type === 'escaped' && chunk.groups[0] === 'a')
+			{
+				this.beep();
+			}
+
+			if(chunk.type === 'graphics' || chunk.type === 'reset')
 			{
 				for(let g = 0; g < chunk.groups.length; g++)
 				{
@@ -41,52 +81,52 @@ export const AnsiRenderer = new Transformer({
 					switch(group)
 					{
 						case 0:
-							for(const key in style)
+							for(const key in this.style)
 							{
-								delete style[key];
+								delete this.style[key];
 							}
 							break;
 
 						case 1:
-							style['filter'] = 'brightness(1.25) contrast(1.25)';
-							// style['text-shadow'] = '1px 1px 0px currentColor';
-							style['font-weight'] = 'bold';
-							style['opacity'] = 1;
+							this.style['filter'] = 'brightness(1.25) contrast(1.25)';
+							// this.style['text-shadow'] = '1px 1px 0px currentColor';
+							this.style['font-weight'] = 'bold';
+							this.style['opacity'] = 1;
 							break;
 
 						case 2:
-							style['filter'] = 'brightness(0.75)';
-							style['font-weight'] = 'light';
-							style['opacity'] = 0.75;
+							this.style['filter'] = 'brightness(0.75)';
+							this.style['font-weight'] = 'light';
+							this.style['opacity'] = 0.75;
 							break;
 
 						case 3:
-							style['font-style'] = 'italic';
+							this.style['font-this.style'] = 'italic';
 							break;
 
 						case 4:
-							style['text-decoration'] = 'underline';
+							this.style['text-decoration'] = 'underline';
 							break;
 
 						case 5:
-							style['animation'] = 'var(--ansiBlink)';
+							this.style['animation'] = 'var(--ansiBlink)';
 							break;
 
 						case 7:
-							style['filter'] = 'invert(1) contrast(1.5)';
+							this.style['filter'] = 'invert(1) contrast(1.5)';
 							break;
 
 						case 8:
-							style['filter'] = 'contrast(0.5)';
-							style['opacity'] = 0.1;
+							this.style['filter'] = 'contrast(0.5)';
+							this.style['opacity'] = 0.1;
 							break;
 
 						case 9:
-							style['text-decoration'] = 'line-through';
+							this.style['text-decoration'] = 'line-through';
 							break;
 
 						case 10:
-							style['font-family'] = 'var(--base-font))';
+							this.style['font-family'] = 'var(--base-font))';
 							break;
 
 						case 11:
@@ -98,76 +138,76 @@ export const AnsiRenderer = new Transformer({
 						case 17:
 						case 18:
 						case 19:
-							style['font-family'] = `var(--alt-font-no-${group})`;
+							this.style['font-family'] = `var(--alt-font-no-${group})`;
 							break;
 
 						case 20:
-							style['font-family'] = 'var(--alt-font-fraktur)';
-							style['font-size'] = '1.1rem';
+							this.style['font-family'] = 'var(--alt-font-fraktur)';
+							this.style['font-size'] = '1.1rem';
 							break;
 
 						case 21:
-							style['font-weight'] = 'initial';
+							this.style['font-weight'] = 'initial';
 							break;
 
 						case 22:
-							style['font-weight'] = 'initial';
+							this.style['font-weight'] = 'initial';
 							break;
 
 						case 23:
-							style['font-style'] = 'fractur';
+							this.style['font-style'] = 'fractur';
 							break;
 
 						case 24:
-							style['text-decoration'] = 'none';
+							this.this.style['text-decoration'] = 'none';
 							break;
 
 						case 25:
-							style['animation'] = 'none';
+							this.style['animation'] = 'none';
 							break;
 
 						case 27:
-							style['filter'] = 'initial';
+							this.style['filter'] = 'initial';
 							break;
 
 						case 28:
-							style['opacity'] = 'initial';
+							this.style['opacity'] = 'initial';
 							break;
 
 						case 29:
-							style['text-decoration'] = 'initial';
+							this.style['text-decoration'] = 'initial';
 							break;
 
 						case 30:
-							style['color'] = pallete.black;
+							this.style['color'] = pallete.black;
 							break;
 
 						case 31:
-							style['color'] = pallete.red;
+							this.style['color'] = pallete.red;
 							break;
 
 						case 32:
-							style['color'] = pallete.green;
+							this.style['color'] = pallete.green;
 							break;
 
 						case 33:
-							style['color'] = pallete.yellow;
+							this.style['color'] = pallete.yellow;
 							break;
 
 						case 34:
-							style['color'] = pallete.blue;
+							this.style['color'] = pallete.blue;
 							break;
 
 						case 35:
-							style['color'] = pallete.magenta;
+							this.style['color'] = pallete.magenta;
 							break;
 
 						case 36:
-							style['color'] = pallete.cyan;
+							this.style['color'] = pallete.cyan;
 							break;
 
 						case 37:
-							style['color'] = pallete.white;
+							this.style['color'] = pallete.white;
 							break;
 
 						case 38:
@@ -176,16 +216,14 @@ export const AnsiRenderer = new Transformer({
 							{
 								const [rd,gr,bl] = chunk.groups[2 + g].split(';');
 
-								style['color'] = `rgb(${rd},${gr},${bl})`;
+								this.style['color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
 							if(chunk.groups[1 + g] == 5)
 							{
-								console.log(chunk.groups, g);
-
 								const {r:rd,g:gr,b:bl} = Colors255[ Number(chunk.groups[2 + g]) ];
 
-								style['color'] = `rgb(${rd},${gr},${bl})`;
+								this.style['color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
 							g += 2;
@@ -193,39 +231,39 @@ export const AnsiRenderer = new Transformer({
 							break;
 
 						case 39:
-							style['color'] = 'var(--fgColor)';
+							this.style['color'] = 'var(--fgColor)';
 							break;
 
 						case 40:
-							style['background-color'] = pallete.black;
+							this.style['background-color'] = pallete.black;
 							break;
 
 						case 41:
-							style['background-color'] = pallete.red;
+							this.style['background-color'] = pallete.red;
 							break;
 
 						case 42:
-							style['background-color'] = pallete.green;
+							this.style['background-color'] = pallete.green;
 							break;
 
 						case 43:
-							style['background-color'] = pallete.yellow;
+							this.style['background-color'] = pallete.yellow;
 							break;
 
 						case 44:
-							style['background-color'] = pallete.blue;
+							this.style['background-color'] = pallete.blue;
 							break;
 
 						case 45:
-							style['background-color'] = pallete.magenta;
+							this.style['background-color'] = pallete.magenta;
 							break;
 
 						case 46:
-							style['background-color'] = pallete.cyan;
+							this.style['background-color'] = pallete.cyan;
 							break;
 
 						case 47:
-							style['background-color'] = pallete.white;
+							this.style['background-color'] = pallete.white;
 							break;
 
 						case 48:
@@ -234,14 +272,14 @@ export const AnsiRenderer = new Transformer({
 							{
 								const [rd,gr,bl] = chunk.groups[2 + g].split(';');
 
-								style['background-color'] = `rgb(${rd},${gr},${bl})`;
+								this.style['background-color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
 							if(chunk.groups[1 + g] == 5)
 							{
 								const {r:rd,g:gr,b:bl} = Colors255[ Number(chunk.groups[2 + g]) ];
 
-								style['background-color'] = `rgb(${rd},${gr},${bl})`;
+								this.style['background-color'] = `rgb(${rd},${gr},${bl})`;
 							}
 
 							g += 2;
@@ -249,28 +287,28 @@ export const AnsiRenderer = new Transformer({
 							break;
 
 						case 49:
-							style['background-color'] = 'var(--bgColor)';
+							this.style['background-color'] = 'var(--bgColor)';
 							break;
 
 						case 51:
-							style['border'] = '1px solid currentColor';
+							this.style['border'] = '1px solid currentColor';
 							break;
 
 						case 52:
-							style['border'] = '1px solid currentColor';
-							style['border-radius'] = '1em';
+							this.style['border'] = '1px solid currentColor';
+							this.style['border-radius'] = '1em';
 							break;
 
 						case 53:
-							style['text-decoration'] = 'overline';
+							this.style['text-decoration'] = 'overline';
 							break;
 
 						case 54:
-							style['border'] = 'initial';
+							this.style['border'] = 'initial';
 							break;
 
 						case 55:
-							style['border'] = 'initial';
+							this.style['border'] = 'initial';
 							break;
 					}
 				}
@@ -279,11 +317,4 @@ export const AnsiRenderer = new Transformer({
 			return false;
 		}
 	}
-});
-
-AnsiRenderer.reset = () => {
-	for(const key in style)
-	{
-		delete style[key];
-	}
-};
+}
