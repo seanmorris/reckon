@@ -11,7 +11,7 @@ body {
 	color: var(--fgColor);
 	background-color: var(--bgColor);
 
-	font-size: 12pt;
+	font-size: 11pt;
 	letter-spacing: 0.1em;
 	--ansiBlink: ansi-blink 2s infinite;
 
