@@ -1,4 +1,4 @@
-export class Transformer
+export class Renderer
 {
 	constructor(ops)
 	{
@@ -26,7 +26,6 @@ export class Transformer
 			{
 				output += chunk;
 			}
-
 		}
 
 		return output;

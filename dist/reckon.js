@@ -181,7 +181,7 @@ exports.Parser = Parser;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Transformer = void 0;
+exports.Renderer = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -189,14 +189,14 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var Transformer = function () {
-  function Transformer(ops) {
-    _classCallCheck(this, Transformer);
+var Renderer = function () {
+  function Renderer(ops) {
+    _classCallCheck(this, Renderer);
 
     this.ops = ops || {};
   }
 
-  _createClass(Transformer, [{
+  _createClass(Renderer, [{
     key: "process",
     value: function process(tree) {
       var output = '';
@@ -219,7 +219,7 @@ var Transformer = function () {
     }
   }]);
 
-  return Transformer;
+  return Renderer;
 }();
 
-exports.Transformer = Transformer;
+exports.Renderer = Renderer;

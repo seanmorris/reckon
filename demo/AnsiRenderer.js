@@ -1,11 +1,15 @@
-import { Transformer } from 'Transformer';
-
+import { Renderer } from 'Renderer';
 import { pallete } from './pallete';
 import { Colors255 } from './Colors255';
 
 const audio = new AudioContext();
 
-export class AnsiRenderer extends Transformer
+const gainNode = audio.createGain();
+
+gainNode.connect(audio.destination);
+gainNode.gain.value = 10 * 0.01;
+
+export class AnsiRenderer extends Renderer
 {
 	style = {};
 
@@ -27,15 +31,12 @@ export class AnsiRenderer extends Transformer
 	beep()
 	{
 		const oscillator = audio.createOscillator();
-		const gainNode   = audio.createGain();
 
 		oscillator.connect(gainNode);
 		oscillator.frequency.value = 840;
 		oscillator.type="square";
 
-		gainNode.connect(audio.destination);
 
-		gainNode.gain.value = 10 * 0.01;
 		
 		oscillator.start(audio.currentTime)
 		oscillator.stop(audio.currentTime + 200 * 0.001);

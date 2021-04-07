@@ -1,5 +1,6 @@
-import { Parser } from 'Parser';
 import { IGNORE, INSERT, ENTER, LEAVE, HOME } from 'Actions';
+
+import { Parser } from 'Parser';
 
 import { AnsiRenderer } from './AnsiRenderer';
 
