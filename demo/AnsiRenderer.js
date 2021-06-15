@@ -35,8 +35,6 @@ export class AnsiRenderer extends Renderer
 		oscillator.connect(gainNode);
 		oscillator.frequency.value = 840;
 		oscillator.type="square";
-
-
 		
 		oscillator.start(audio.currentTime)
 		oscillator.stop(audio.currentTime + 200 * 0.001);
@@ -89,20 +87,20 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 1:
-							this.style['filter'] = 'brightness(1.25) contrast(1.25)';
-							// this.style['text-shadow'] = '1px 1px 0px currentColor';
+							this.style['filter'] = 'contrast(1.25)';
+							// this.style['text-shadow'] = '1px 1px 1px rgba(0,0,0,0.25), 0px 0px 1px rgba(0,0,0,0.125)';
 							this.style['font-weight'] = 'bold';
 							this.style['opacity'] = 1;
 							break;
 
 						case 2:
-							this.style['filter'] = 'brightness(0.75)';
+							this.style['filter'] = 'brightness(0.85)';
 							this.style['font-weight'] = 'light';
 							this.style['opacity'] = 0.75;
 							break;
 
 						case 3:
-							this.style['font-this.style'] = 'italic';
+							this.style['font-style'] = 'italic';
 							break;
 
 						case 4:
@@ -114,7 +112,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 7:
-							this.style['filter'] = 'invert(1) contrast(1.5)';
+							this.style['filter'] = 'invert(1)';
 							break;
 
 						case 8:
@@ -156,15 +154,22 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 23:
-							this.style['font-style'] = 'fractur';
+							this.style['font-weight'] = 'initial';
+							this.style['font-style'] = 'initial';
 							break;
 
 						case 24:
-							this.this.style['text-decoration'] = 'none';
+							this.style['text-decoration'] = 'none';
+							this.style['font-family'] = 'sans-serif';
+							this.style['font-size'] = '12pt';
 							break;
 
 						case 25:
 							this.style['animation'] = 'none';
+							break;
+
+						case 26:
+							this.style['text-transform'] = 'full-width';
 							break;
 
 						case 27:
@@ -180,35 +185,35 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 30:
-							this.style['color'] = pallete.black;
+							this.style['color'] = pallete.dBlack;
 							break;
 
 						case 31:
-							this.style['color'] = pallete.red;
+							this.style['color'] = pallete.dRed;
 							break;
 
 						case 32:
-							this.style['color'] = pallete.green;
+							this.style['color'] = pallete.dGreen;
 							break;
 
 						case 33:
-							this.style['color'] = pallete.yellow;
+							this.style['color'] = pallete.dYellow;
 							break;
 
 						case 34:
-							this.style['color'] = pallete.blue;
+							this.style['color'] = pallete.dBlue;
 							break;
 
 						case 35:
-							this.style['color'] = pallete.magenta;
+							this.style['color'] = pallete.dMagenta;
 							break;
 
 						case 36:
-							this.style['color'] = pallete.cyan;
+							this.style['color'] = pallete.dCyan;
 							break;
 
 						case 37:
-							this.style['color'] = pallete.white;
+							this.style['color'] = pallete.dWhite;
 							break;
 
 						case 38:
@@ -289,6 +294,10 @@ export class AnsiRenderer extends Renderer
 
 						case 49:
 							this.style['background-color'] = 'var(--bgColor)';
+							break;
+
+						case 50:
+							this.style['text-transform'] = 'initial';
 							break;
 
 						case 51:

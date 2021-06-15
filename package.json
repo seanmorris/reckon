@@ -1,5 +1,5 @@
 {
-	"name": "reckon",
+	"name": "sixgram",
 	"version": "0.0.0",
 	"author": "Parser library inspired by Perl 6 Grammars",
 	"license": "Apache-2.0",
@@ -18,8 +18,8 @@
 	},
 	"dependencies": {},
 	"files": [
-		"dist/reckon.js",
-		"dist/reckon.min.js",
+		"dist/sixgram.js",
+		"dist/sixgram.min.js",
 		"Action.js",
 		"Parser.js",
 		"Chunk.js",

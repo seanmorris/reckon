@@ -1,6 +1,6 @@
 exports.files = {
-  javascripts: { joinTo: 'reckon-demo.js'},
-  stylesheets: { joinTo: 'reckon-demo.css' }
+  javascripts: { joinTo: 'sixgram-demo.js'},
+  stylesheets: { joinTo: 'sixgram-demo.css' }
 };
 
 exports.plugins = {

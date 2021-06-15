@@ -1,4 +1,4 @@
-# Reckon.js
+# sixgram.js
 *A parsing library inspired by Perl 6 Grammars.*
 
 Break your data into a syntax tree:
