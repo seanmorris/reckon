@@ -1,5 +1,5 @@
-import { Chunk } from 'Chunk';
-import { IGNORE, INSERT, ENTER, LEAVE, HOME } from 'Actions';
+import { Chunk } from './Chunk';
+import { IGNORE, INSERT, ENTER, LEAVE, HOME } from './Actions';
 
 export class Parser
 {

@@ -185,35 +185,35 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 30:
-							this.style['color'] = pallete.dBlack;
+							this.style['color'] = pallete.black;
 							break;
 
 						case 31:
-							this.style['color'] = pallete.dRed;
+							this.style['color'] = pallete.red;
 							break;
 
 						case 32:
-							this.style['color'] = pallete.dGreen;
+							this.style['color'] = pallete.green;
 							break;
 
 						case 33:
-							this.style['color'] = pallete.dYellow;
+							this.style['color'] = pallete.yellow;
 							break;
 
 						case 34:
-							this.style['color'] = pallete.dBlue;
+							this.style['color'] = pallete.blue;
 							break;
 
 						case 35:
-							this.style['color'] = pallete.dMagenta;
+							this.style['color'] = pallete.magenta;
 							break;
 
 						case 36:
-							this.style['color'] = pallete.dCyan;
+							this.style['color'] = pallete.cyan;
 							break;
 
 						case 37:
-							this.style['color'] = pallete.dWhite;
+							this.style['color'] = pallete.white;
 							break;
 
 						case 38:
@@ -269,7 +269,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 47:
-							this.style['background-color'] = pallete.white;
+							this.style['background-color'] = pallete.dWhite;
 							break;
 
 						case 48:

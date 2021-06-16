@@ -1,6 +1,6 @@
 {
 	"name": "sixgram",
-	"version": "0.0.1",
+	"version": "0.0.2-c",
 	"author": "Parser library inspired by Perl 6 Grammars",
 	"license": "Apache-2.0",
 	"devDependencies": {
@@ -16,7 +16,6 @@
 		"raw-brunch": "^1.0.2",
 		"terser-brunch": "^4"
 	},
-	"dependencies": {},
 	"files": [
 		"dist/sixgram.js",
 		"dist/sixgram.min.js",

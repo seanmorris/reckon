@@ -40,9 +40,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Parser = void 0;
 
-var _Chunk = require("Chunk");
+var _Chunk = require("./Chunk");
 
-var _Actions = require("Actions");
+var _Actions = require("./Actions");
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
