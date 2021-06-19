@@ -1,6 +1,6 @@
 {
 	"name": "sixgram",
-	"version": "0.0.2-c",
+	"version": "0.0.2-d",
 	"author": "Parser library inspired by Perl 6 Grammars",
 	"license": "Apache-2.0",
 	"devDependencies": {
