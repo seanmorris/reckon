@@ -88,8 +88,8 @@ export class AnsiRenderer extends Renderer
 
 						case 1:
 							this.style['filter'] = 'contrast(1.25)';
-							// this.style['text-shadow'] = '1px 1px 1px rgba(0,0,0,0.25), 0px 0px 1px rgba(0,0,0,0.125)';
-							this.style['font-weight'] = 'bold';
+							this.style['text-shadow'] = '1px 1px 1px currentColor, 0px 0px 1px currentColor';
+							this.style['font-weight'] = '900';
 							this.style['opacity'] = 1;
 							break;
 
@@ -241,31 +241,31 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 40:
-							this.style['background-color'] = pallete.black;
+							this.style['background-color'] = pallete.dBblack;
 							break;
 
 						case 41:
-							this.style['background-color'] = pallete.red;
+							this.style['background-color'] = pallete.dRed;
 							break;
 
 						case 42:
-							this.style['background-color'] = pallete.green;
+							this.style['background-color'] = pallete.dGreen;
 							break;
 
 						case 43:
-							this.style['background-color'] = pallete.yellow;
+							this.style['background-color'] = pallete.dYellow;
 							break;
 
 						case 44:
-							this.style['background-color'] = pallete.blue;
+							this.style['background-color'] = pallete.dBlue;
 							break;
 
 						case 45:
-							this.style['background-color'] = pallete.magenta;
+							this.style['background-color'] = pallete.dMmagenta;
 							break;
 
 						case 46:
-							this.style['background-color'] = pallete.cyan;
+							this.style['background-color'] = pallete.dCyan;
 							break;
 
 						case 47:
