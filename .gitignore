@@ -1,3 +1,5 @@
 /*.js
 !/brunch-config.js
 /node_modules/
+ansi.txt
+*.map
