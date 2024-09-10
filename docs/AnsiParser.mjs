@@ -17,4 +17,4 @@ const modes	= {
 	},
 };
 
-export const AnsiParser = new Parser(tokens, modes);
+export const { AnsiParser } = new Parser(tokens, modes);
