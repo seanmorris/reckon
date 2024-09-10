@@ -13,6 +13,7 @@ body {
 
 	font-size: 13pt;
 	--ansiBlink: ansi-blink 2s infinite;
+	--ansiSlowBlink: ansi-blink 4.5s infinite;
 
 	--base-font: 'perfect_dos_vga_437regular';
 
@@ -66,6 +67,10 @@ textarea {
 #output > * {
 	max-width: 100%;
 	opacity: 0.95;
+}
+
+#output > *:empty {
+	min-height: 1rem;
 }
 
 .ansi:empty {

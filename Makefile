@@ -1,15 +1,16 @@
-.PHONY: all package min dist prod clean
+.PHONY: all demo test
 
-all: package dist min
+all: dependencies demo test
 
-package:
-	npx babel source/ --out-dir .
+demo:
+	cp ./Actions.mjs ./Chunk.mjs ./Parser.mjs ./Renderer.mjs docs/
 
-dist:
-	NODE_ENV=prod npx babel source/ --no-comments --out-file dist/sixgram.js
-
-min:
-	NODE_ENV=prod-min npx babel source/ --no-comments --out-file dist/sixgram.min.js
+serve-demo:
+	cd docs/ && npx http-server
 
 dependencies:
 	npm install
+
+test:
+	@ cd test/ \
+	&& npx cvtest ${TESTLIST} > ../results.json

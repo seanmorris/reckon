@@ -1,6 +1,6 @@
-import { Renderer } from 'Renderer';
-import { pallete } from './pallete';
-import { Colors255 } from './Colors255';
+import { Renderer } from './Renderer.mjs';
+import { pallete } from './pallete.mjs';
+import { Colors255 } from './Colors255.mjs';
 
 const audio = new AudioContext();
 
@@ -18,7 +18,7 @@ export class AnsiRenderer extends Renderer
 		super({
 			normal: (chunk, parent) => this.setGraphicsMode(chunk, parent)
 		})
-	}	
+	}
 
 	reset()
 	{
@@ -35,7 +35,7 @@ export class AnsiRenderer extends Renderer
 		oscillator.connect(gainNode);
 		oscillator.frequency.value = 840;
 		oscillator.type="square";
-		
+
 		oscillator.start(audio.currentTime)
 		oscillator.stop(audio.currentTime + 200 * 0.001);
 	}
@@ -50,23 +50,23 @@ export class AnsiRenderer extends Renderer
 			}
 
 			let styleString = '';
-			
+
 			for(const [key, val] of Object.entries(this.style))
 			{
 				styleString += `${key}: ${val}; `;
 			}
-			
+
 			return `<span class = "ansi" style = "${styleString}">${chunk}</span>`;
 		}
 
 		if(typeof chunk === 'object')
 		{
-			if(chunk.type === 'escaped' && chunk.groups[0] === 'a')
+			if(chunk.token === 'escaped' && chunk.groups[0] === 'a')
 			{
 				this.beep();
 			}
 
-			if(chunk.type === 'graphics' || chunk.type === 'reset')
+			if(chunk.token === 'graphics' || chunk.token === 'reset')
 			{
 				for(let g = 0; g < chunk.groups.length; g++)
 				{
@@ -94,8 +94,8 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 2:
-							this.style['filter'] = 'brightness(0.85)';
-							this.style['font-weight'] = 'light';
+							this.style['filter'] = 'brightness(0.65) contrast(0.85)';
+							this.style['font-weight'] = '100';
 							this.style['opacity'] = 0.75;
 							break;
 
@@ -108,6 +108,10 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 5:
+							this.style['animation'] = 'var(--ansiSlowBlink)';
+							break;
+
+						case 6:
 							this.style['animation'] = 'var(--ansiBlink)';
 							break;
 
@@ -129,13 +133,26 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 11:
+							this.style['padding-left']  = '0.25em';
+							this.style['padding-right'] = '0.25em';
+							this.style['font-family'] = `var(--alt-font-no-${group})`;
+							break;
+
 						case 12:
 						case 13:
 						case 14:
 						case 15:
 						case 16:
+							this.style['font-family'] = `var(--alt-font-no-${group})`;
+							break;
 						case 17:
+							this.style['padding-left']  = '0.25em';
+							this.style['padding-right'] = '0.25em';
+							this.style['font-family'] = `var(--alt-font-no-${group})`;
+							break;
 						case 18:
+							this.style['font-family'] = `var(--alt-font-no-${group})`;
+							break;
 						case 19:
 							this.style['font-family'] = `var(--alt-font-no-${group})`;
 							break;
@@ -241,7 +258,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 40:
-							this.style['background-color'] = pallete.dBblack;
+							this.style['background-color'] = pallete.dBlack;
 							break;
 
 						case 41:
@@ -261,7 +278,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 45:
-							this.style['background-color'] = pallete.dMmagenta;
+							this.style['background-color'] = pallete.dMagenta;
 							break;
 
 						case 46:
@@ -273,7 +290,6 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 48:
-
 							if(chunk.groups[1 + g] == 2)
 							{
 								const [rd,gr,bl] = chunk.groups[2 + g].split(';');
@@ -302,11 +318,15 @@ export class AnsiRenderer extends Renderer
 
 						case 51:
 							this.style['border'] = '1px solid currentColor';
+							this.style['padding-left']  = '0.35em';
+							this.style['padding-right'] = '0.35em';
 							break;
 
 						case 52:
 							this.style['border'] = '1px solid currentColor';
 							this.style['border-radius'] = '1em';
+							this.style['padding-left']  = '0.35em';
+							this.style['padding-right'] = '0.35em';
 							break;
 
 						case 53:

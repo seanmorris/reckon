@@ -1,8 +1,6 @@
-import { IGNORE, INSERT, ENTER, LEAVE, HOME } from 'Actions';
-
-import { Parser } from 'Parser';
-
-import { AnsiRenderer } from './AnsiRenderer';
+import { IGNORE, INSERT, ENTER, LEAVE, HOME } from './Actions.mjs';
+import { Parser } from './Parser.mjs';
+import { AnsiRenderer } from './AnsiRenderer.mjs';
 
 const renderer = new AnsiRenderer;
 
@@ -14,9 +12,9 @@ const refresh = (box, source, escaped) => {
 	}
 
 	const lines  = source.split(/\n/);
-	
+
 	let tokens;
-	
+
 	if(escaped)
 	{
 		tokens = {
@@ -44,33 +42,27 @@ const refresh = (box, source, escaped) => {
 			, characters: [INSERT]
 		},
 	}
-	
+
 	const AnsiParser = new Parser(tokens, modes);
-	
+
 	lines.map(line => {
-
 		renderer.reset();
-
 		const syntax = AnsiParser.parse(line);
 		const output = renderer.process(syntax);
-
 		const div = document.createElement('div');
-
 		div.innerHTML = output;
-
 		box.append(div);
 	});
 
 };
 
 document.addEventListener('DOMContentLoaded', event => {
-
 	const box     = document.querySelector('#output');
 	const escaped = document.querySelector('#escaped');
 	const source  = document.querySelector('textarea');
-	
+
 	source.addEventListener('input', event => refresh(box, source.value, escaped.checked));
 	escaped.addEventListener('input', event => refresh(box, source.value, escaped.checked));
 
-	refresh(box, source.value, escaped.checked);	
+	refresh(box, source.value, escaped.checked);
 });

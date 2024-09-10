@@ -27,10 +27,8 @@ export const AnsiParser = new Parser(tokens, modes);
 
 Render it:
 
-
 ```javascript
 import { Transformer } from 'Transformer';
-
 import { pallete } from 'pallete';
 import { Colors255 } from 'Colors255';
 
@@ -50,12 +48,12 @@ export const AnsiRenderer = new Transformer({
 		if(typeof chunk === 'string')
 		{
 			let styleString = '';
-			
+
 			for(const [key, val] of Object.entries(style))
 			{
 				styleString += `${key}: ${val}; `;
 			}
-			
+
 			return `<span class = "ansi" style = "${styleString}">${chunk}</span>`;
 		}
 

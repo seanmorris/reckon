@@ -1,8 +1,11 @@
 {
 	"name": "sixgram",
-	"version": "0.0.2-d",
+	"version": "0.1.0",
 	"author": "Parser library inspired by Perl 6 Grammars",
 	"license": "Apache-2.0",
+	"scripts": {
+		"test": "npx cvtest test/WordTest.mjs"
+	},
 	"devDependencies": {
 		"@babel/cli": "^7.12.1",
 		"@babel/core": "^7.12.3",
@@ -14,7 +17,8 @@
 		"brunch": "^3",
 		"clean-css-brunch": "^3",
 		"raw-brunch": "^1.0.2",
-		"terser-brunch": "^4"
+		"terser-brunch": "^4",
+		"cv3-test": "^0.1.1"
 	},
 	"files": [
 		"dist/sixgram.js",
