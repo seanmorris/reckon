@@ -104,7 +104,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 4:
-							this.style['text-decoration'] = 'underline';
+							this.style['text-decoration'] += ' underline';
 							break;
 
 						case 5:
@@ -125,7 +125,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 9:
-							this.style['text-decoration'] = 'line-through';
+							this.style['text-decoration'] += ' line-through';
 							break;
 
 						case 10:
@@ -159,7 +159,7 @@ export class AnsiRenderer extends Renderer
 
 						case 20:
 							this.style['font-family'] = 'var(--alt-font-fraktur)';
-							this.style['font-size'] = '1.1rem';
+							// this.style['font-size'] = '1.1rem';
 							break;
 
 						case 21:
@@ -176,9 +176,9 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 24:
-							this.style['text-decoration'] = 'none';
+							this.style['text-decoration'] = String(this.style['text-decoration'] || '').replace(/underline/g, '').trim();
 							this.style['font-family'] = 'sans-serif';
-							this.style['font-size'] = '12pt';
+							// this.style['font-size'] = '12pt';
 							break;
 
 						case 25:
@@ -338,7 +338,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 55:
-							this.style['border'] = 'initial';
+							this.style['text-decoration'] = String(this.style['text-decoration'] || '').replace(/overline/g, '').trim();
 							break;
 					}
 				}
