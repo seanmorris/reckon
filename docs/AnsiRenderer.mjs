@@ -104,7 +104,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 4:
-							this.style['text-decoration'] += ' underline';
+							this.style['text-decoration'] = String(this.style['text-decoration'] || '') + ' underline';
 							break;
 
 						case 5:
@@ -125,7 +125,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 9:
-							this.style['text-decoration'] += ' line-through';
+							this.style['text-decoration'] = String(this.style['text-decoration'] || '') + ' line-through';
 							break;
 
 						case 10:
@@ -159,7 +159,6 @@ export class AnsiRenderer extends Renderer
 
 						case 20:
 							this.style['font-family'] = 'var(--alt-font-fraktur)';
-							// this.style['font-size'] = '1.1rem';
 							break;
 
 						case 21:
@@ -167,18 +166,20 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 22:
+							this.style['filter']      = 'initial';
+							this.style['text-shadow'] = 'initial';
 							this.style['font-weight'] = 'initial';
+							this.style['opacity']     = 'initial';
 							break;
 
 						case 23:
-							this.style['font-weight'] = 'initial';
-							this.style['font-style'] = 'initial';
+							this.style['font-family'] = 'initial';
+							this.style['font-style']  = 'initial';
 							break;
 
 						case 24:
 							this.style['text-decoration'] = String(this.style['text-decoration'] || '').replace(/underline/g, '').trim();
 							this.style['font-family'] = 'sans-serif';
-							// this.style['font-size'] = '12pt';
 							break;
 
 						case 25:
@@ -186,7 +187,8 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 26:
-							this.style['text-transform'] = 'full-width';
+							this.style['letter-spacing'] = '.2rem';
+							this.style['font-kerning']   = 'none';
 							break;
 
 						case 27:
@@ -198,7 +200,7 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 29:
-							this.style['text-decoration'] = 'initial';
+							this.style['text-decoration'] = String(this.style['text-decoration'] || '').replace(/line-through/g, '').trim();
 							break;
 
 						case 30:
@@ -313,7 +315,8 @@ export class AnsiRenderer extends Renderer
 							break;
 
 						case 50:
-							this.style['text-transform'] = 'initial';
+							this.style['letter-spacing'] = 'initial';
+							this.style['font-kerning']   = 'initial';
 							break;
 
 						case 51:
@@ -339,6 +342,18 @@ export class AnsiRenderer extends Renderer
 
 						case 55:
 							this.style['text-decoration'] = String(this.style['text-decoration'] || '').replace(/overline/g, '').trim();
+							break;
+
+						case 73:
+							this.style['vertical-align'] = 'super';
+							break;
+
+						case 74:
+							this.style['vertical-align'] = 'sub';
+							break;
+
+						case 75:
+							this.style['vertical-align'] = 'initial';
 							break;
 					}
 				}
