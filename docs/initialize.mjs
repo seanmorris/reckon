@@ -1,4 +1,4 @@
-import { IGNORE, INSERT, ENTER, LEAVE, HOME } from './Actions.mjs';
+import { IGNORE, INSERT, ENTER, LEAVE } from './Actions.mjs';
 import { Parser } from './Parser.mjs';
 import { AnsiRenderer } from './AnsiRenderer.mjs';
 
