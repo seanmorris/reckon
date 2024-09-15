@@ -21,11 +21,11 @@
 		"cv3-test": "^0.1.2"
 	},
 	"files": [
-		"dist/sixgram.js",
-		"dist/sixgram.min.js",
-		"Actions.js",
-		"Parser.js",
-		"Chunk.js",
-		"Renderer.js"
+		"Actions.mjs",
+		"Chunk.mjs",
+		"Parser.mjs",
+		"Renderer.mjs",
+		"README.md",
+		"package.json"
 	]
 }
