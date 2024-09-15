@@ -1,3 +1,4 @@
+import { compareSnapshot } from 'cv3-test/Snapshot.mjs';
 import { Test } from 'cv3-test/Test.mjs';
 import { INSERT, ENTER, LEAVE, IGNORE } from '../Actions.mjs';
 import { Parser } from '../Parser.mjs';
@@ -24,8 +25,9 @@ export class NumberTest extends Test
 		}
 
 		const parser = new Parser(tokens, modes);
+		const parsed = parser.parse(numbers);
 
-		// console.error(JSON.stringify(parser.parse(numbers), null, 4));
+		this.assert(compareSnapshot(parsed), 'Snapshot is invalid!');
 	}
 
 	testBracketed()
@@ -42,7 +44,7 @@ export class NumberTest extends Test
 			normal: {
 				open:   ['list', ENTER, INSERT],
 				spacer: [INSERT],
-				digits: [ENTER, 'digits', INSERT],
+				digits: ['digits', ENTER, INSERT],
 			}
 			, digits: {
 				open:   ['list', ENTER, INSERT],
@@ -54,12 +56,14 @@ export class NumberTest extends Test
 				open:   ['list', ENTER, INSERT],
 				close:  [INSERT, LEAVE],
 				spacer: [INSERT],
-				digits: [ENTER, 'digits', INSERT],
+				digits: ['digits', ENTER, INSERT],
 			}
-		}
+		};
 
 		const parser = new Parser(tokens, modes);
+		const parsed = parser.parse(numbers);
 
-		console.error(JSON.stringify(parser.parse(numbers), null, 4));
+		this.assert(compareSnapshot(parsed), 'Snapshot is invalid!');
+		this.assert(compareSnapshot(parsed.toString()), 'Snapshot is invalid!');
 	}
 }

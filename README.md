@@ -1,312 +1,242 @@
-# sixgram.js
-*A parsing library inspired by Perl 6 Grammars.*
+# sixgram
+*inspired by Rakudo Grammars.*
 
-Break your data into a syntax tree:
+## What is it?
+
+Sixgram is a parsing library that was originally inspired by Raku Grammars (formerly Perl 6).
+
+It allows the parsing of strings into trees of `chunks` using `modes`, `tokens`, and `actions`.
+
+## How it works
+
+### Token
+
+A `token` is a regular expression that may match a part of the string being parsed. Tokens are searched for at the begining of the string being parsed.
+
+When a match is found, the matching section is removed from the begining of the input string.
+
+For example, a set of tokens that can match numbers and spaces could looks like:
 
 ```javascript
-import { Parser } from 'Parser';
-import { IGNORE, INSERT, ENTER, LEAVE, HOME } from 'Actions';
+const tokens = {
+    spacer: /\D+/,
+    digits: /\d+/,
+};
+```
+
+### Action
+
+An `action` determines the handling of the text that has matched the token.
+
+The available actions are: `INSERT`, `ENTER`, `LEAVE`, `IGNORE`.
+
+These actions affect text handling:
+
+* `INSERT`
+  Inserts the text into the `list` of the current `chunk`.
+* `IGNORE`
+  Drops the value and move onto the next match.
+
+These actions affect `chunk` handling:
+
+* `ENTER`
+  Creates a new chunk and make it a child of the current chunk.
+  The child will be the current chunk afterward.
+  Similar to `mkdir NEWDIR && cd NEWDIR`
+* `LEAVE`
+  Switch back to the parent of the current chunk.
+  Similar to `cd ..`
+
+### Mode
+
+A `mode` is a mapping of tokens to actions. Given the current `mode`, a parser will treat a set of tokens differently, defined by its list of actions.
+
+For example, the constant `modes` in the example below below defines two modes: `normal` and `digits`. For each of the tokens expected to be encountered in a given mode, there is a list of actions provided.
+
+```javascript
+const modes = {
+    normal: {
+        spacer: [INSERT],
+        digits: ['digits', ENTER, INSERT],
+    },
+    digits: {
+        spacer: [LEAVE, INSERT],
+        digits: [INSERT],
+    },
+}
+```
+
+The modes above will give us the following behavior:
+
+The parser always starts in `normal` mode.
+
+If we are in `normal` mode, and we enounter a `spacer` token, then the text that matched that regex will be `INSERT`ed into the current chunk.
+
+If we are in `normal` mode, and we encounter a `digits` token, then we will first switch to `digits` mode. We will then  `ENTER` a new chunk, meaning it will be made a child of the current chunk, and then we will switch into it as the current chunk. We then `INSERT` the matching text into the list of the new current chunk.
+
+If we are in `digits` mode, and we encounter a `spacer` token, we will `LEAVE` the current chunk and return to its parent, and then `INSERT` the text into the parent chunk, which is now our current chunk again.
+
+If we are in `digits` mode, and we encounter a `digits` token, we will simply `INSERT` the text into the current chunk.
+
+```javascript
+import { INSERT, ENTER, LEAVE, IGNORE } from './Actions.mjs';
+import { Parser } from './Parser.mjs';
+
+import util from 'node:util';
 
 const tokens = {
-	reset:         /\u001b\[(0)m/
-	, esc:         /\u001b\[(\d+);?(\d+)?;?([\d;]*)./
-	, characters:  /[^\u001b]+/
+    spacer: /\D+/,
+    digits: /\d+/,
 };
 
-const modes  = {
-	normal:{
-		reset: [IGNORE, ENTER, LEAVE]
-		, esc: [IGNORE, ENTER, LEAVE]
-		, characters: [INSERT]
-	},
+const modes = {
+    normal: {
+        spacer: [INSERT],
+        digits: ['digits', ENTER, INSERT],
+    },
+    digits: {
+        spacer: [LEAVE, INSERT],
+        digits: [INSERT],
+    },
 }
 
-export const AnsiParser = new Parser(tokens, modes);
+const parser = new Parser(tokens, modes);
+const parsed = parser.parse('0 12 345 6789');
+
+console.log( util.inspect(parsed, {depth: null, colors: true}) );
+```
+
+```json
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "0",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "0"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "12",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "12"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "345",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "345"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "6789",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "6789"
+            ]
+        }
+    ]
+}
 
 ```
 
-Render it:
+A more complicated example could facilitate the processing of bracketed numbers:
 
 ```javascript
-import { Transformer } from 'Transformer';
-import { pallete } from 'pallete';
-import { Colors255 } from 'Colors255';
+const tokens = {
+    open:   /\[/,
+    close:  /\]/,
+    spacer: /\D/,
+    digits: /\d+/,
+};
 
-const oneByte = {};
+const modes = {
+    normal: {
+        open:   ['list', ENTER, INSERT],
+        spacer: [INSERT],
+        digits: ['digits', ENTER, INSERT],
+    },
+    digits: {
+        open:   ['list', ENTER, INSERT],
+        close:  [LEAVE, INSERT, LEAVE],
+        spacer: [LEAVE, INSERT],
+        digits: [INSERT],
+    },
+    list: {
+        open:   ['list', ENTER, INSERT],
+        close:  [INSERT, LEAVE],
+        spacer: [INSERT],
+        digits: ['digits', ENTER, INSERT],
+    },
+};
 
-for(const c in Colors255)
-{
-	const color = Colors255[c];
+const parser = new Parser(tokens, modes);
+const parsed = parser.parse('0 [1 2] 3 4 [5 [[6] 7] 8] 9');
 
-	oneByte[ color.colorId ] = color.rgb;
+console.log( util.inspect(parsed, {depth: null, colors: true}) );
+```
+
+Or even HTML trees:
+
+```javascript
+const tokens = {
+    startOpenTag: /<(\w+)/i,
+    endTag: />/,
+    closeTag: /<\/(\w+)>/,
+    startAttr: /(\w+)(?:\s+=\s+)?/,
+    quote: /['"]/,
+    endAttr: /['"]/,
+    whitespace: /\s+/,
+    escape:   /\\/,
+    quoted: /[^'"\\]+/,
+    text: /[^<]+/,
+    word: /\S+/,
+    any: /./,
+};
+
+const modes = {
+    normal: {
+        startOpenTag: ['tag', ENTER, IGNORE],
+        closeTag: [IGNORE, LEAVE, LEAVE],
+        text: [INSERT],
+    },
+    tag: {
+        endTag: [IGNORE, 'normal', ENTER],
+        startAttr: ['attr', ENTER, INSERT],
+        whitespace: [IGNORE],
+        word: [INSERT],
+    },
+    attr: {
+        quote: [IGNORE],
+        whitespace: [IGNORE, LEAVE],
+        quoted: [INSERT],
+        escape: [IGNORE, 'escape', ENTER],
+        endAttr: [IGNORE, LEAVE],
+    },
+    escape: {
+        any: [LEAVE, INSERT]
+    },
 }
-const style = {};
-
-export const AnsiRenderer = new Transformer({
-	normal:   (chunk, parent) => {
-
-		if(typeof chunk === 'string')
-		{
-			let styleString = '';
-
-			for(const [key, val] of Object.entries(style))
-			{
-				styleString += `${key}: ${val}; `;
-			}
-
-			return `<span class = "ansi" style = "${styleString}">${chunk}</span>`;
-		}
-
-		if(typeof chunk === 'object')
-		{
-			if(chunk.type === 'esc' || chunk.type === 'reset')
-			{
-
-				for(const g in chunk.groups)
-				{
-					const group = Number(chunk.groups[g]);
-
-					switch(group)
-					{
-						case 0:
-							for(const key in style)
-							{
-								delete style[key];
-								// style[key] = 'initial'
-
-								// if(key === 'color')
-								// {
-								// 	style[key] = 'var(--fgColor)'
-								// }
-
-								// if(key === 'background-color')
-								// {
-								// 	style[key] = 'var(--bgColor)'
-								// }
-							}
-							break;
-
-						case 1:
-							style['filter'] = 'brightness(1.5) contrast(0.5)';
-							style['opacity'] = 1;
-							break;
-
-						case 2:
-							style['filter'] = 'brightness(0.5) contrast(1.5)';
-							style['opacity'] = 0.75;
-							break;
-
-						case 3:
-							style['font-style'] = 'italic';
-							break;
-
-						case 4:
-							style['text-decoration'] = 'underline';
-							break;
-
-						case 5:
-							style['animation'] = 'var(--ansiBlink)';
-							break;
-
-						case 7:
-							style['filter'] = 'invert(1) contrast(1.5)';
-							break;
-
-						case 8:
-							style['opacity'] = 0.1;
-							break;
-
-						case 9:
-							style['text-decoration'] = 'line-through';
-							break;
-
-						case 10:
-							style['font-family'] = 'var(--base-font))';
-							break;
-
-						case 11:
-						case 12:
-						case 13:
-						case 14:
-						case 15:
-						case 16:
-						case 17:
-						case 18:
-						case 19:
-							style['font-family'] = `var(--alt-font-no-${group})`;
-							break;
-
-						case 20:
-							style['font-family'] = 'var(--alt-font-fraktur)';
-							break;
-
-						case 21:
-							style['font-weight'] = 'initial';
-							break;
-
-						case 22:
-							style['font-weight'] = 'initial';
-							break;
-
-						case 23:
-							style['font-style'] = 'fractur';
-							break;
-
-						case 24:
-							style['text-decoration'] = 'none';
-							break;
-
-						case 25:
-							style['animation'] = 'none';
-							break;
-
-						case 27:
-							style['filter'] = 'initial';
-							break;
-
-						case 28:
-							style['opacity'] = 'initial';
-							break;
-
-						case 29:
-							style['text-decoration'] = 'initial';
-							break;
-
-						case 30:
-							style['color'] = pallete.black;
-							break;
-
-						case 31:
-							style['color'] = pallete.red;
-							break;
-
-						case 32:
-							style['color'] = pallete.green;
-							break;
-
-						case 33:
-							style['color'] = pallete.yellow;
-							break;
-
-						case 34:
-							style['color'] = pallete.blue;
-							break;
-
-						case 35:
-							style['color'] = pallete.magenta;
-							break;
-
-						case 36:
-							style['color'] = pallete.cyan;
-							break;
-
-						case 37:
-							style['color'] = pallete.white;
-							break;
-
-						case 38:
-
-							if(chunk.groups[2] == 2)
-							{
-								const [r,g,b] = chunk.groups[g+1].split(';');
-
-								style['color'] = `rgb(${r},${g},${b})`;
-							}
-
-							if(chunk.groups[2] == 5)
-							{
-								const {r,g,b} = oneByte[ Number(chunk.groups[g+1]) ];
-
-								style['color'] = `rgb(${r},${g},${b})`;
-							}
-
-							break;
-
-						case 39:
-							style['color'] = 'var(--fgColor)';
-							break;
-
-						case 40:
-							style['background-color'] = pallete.black;
-							break;
-
-						case 41:
-							style['background-color'] = pallete.red;
-							break;
-
-						case 42:
-							style['background-color'] = pallete.green;
-							break;
-
-						case 43:
-							style['background-color'] = pallete.yellow;
-							break;
-
-						case 44:
-							style['background-color'] = pallete.blue;
-							break;
-
-						case 45:
-							style['background-color'] = pallete.magenta;
-							break;
-
-						case 46:
-							style['background-color'] = pallete.cyan;
-							break;
-
-						case 47:
-							style['background-color'] = pallete.white;
-							break;
-
-						case 48:
-
-							if(chunk.groups[1] == 2)
-							{
-								const [r,g,b] = chunk.groups[2].split(';');
-
-								style['background-color'] = `rgb(${r},${g},${b})`;
-							}
-
-							if(chunk.groups[1] == 5)
-							{
-								const {r,g,b} = oneByte[ Number(chunk.groups[2]) ];
-
-								style['background-color'] = `rgb(${r},${g},${b})`;
-							}
-
-							break;
-
-						case 49:
-							style['background-color'] = 'var(--bgColor)';
-							break;
-
-						case 51:
-							style['border'] = '1px solid currentColor';
-							break;
-
-						case 52:
-							style['border'] = '1px solid currentColor';
-							style['border-radius'] = '1em';
-							break;
-
-						case 53:
-							style['border-top'] = '1px solid currentColor';
-							break;
-
-						case 54:
-							style['border'] = 'initial';
-							break;
-
-						case 55:
-							style['border'] = 'initial';
-							break;
-					}
-				}
-			}
-
-			return false;
-		}
-	}
-});
-
 ```

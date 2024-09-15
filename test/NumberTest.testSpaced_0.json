@@ -1,0 +1,52 @@
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "0",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "0"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "12",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "12"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "345",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "345"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "digits",
+            "match": "6789",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "6789"
+            ]
+        }
+    ]
+}

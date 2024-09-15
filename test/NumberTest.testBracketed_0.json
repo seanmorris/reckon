@@ -1,0 +1,162 @@
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        {
+            "type": "digits",
+            "token": "digits",
+            "match": "0",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "0"
+            ]
+        },
+        " ",
+        {
+            "type": "list",
+            "token": "open",
+            "match": "[",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "[",
+                {
+                    "type": "digits",
+                    "token": "digits",
+                    "match": "1",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "1"
+                    ]
+                },
+                " ",
+                {
+                    "type": "digits",
+                    "token": "digits",
+                    "match": "2",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "2"
+                    ]
+                },
+                "]"
+            ]
+        },
+        " ",
+        {
+            "type": "digits",
+            "token": "digits",
+            "match": "3",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "3"
+            ]
+        },
+        " ",
+        {
+            "type": "digits",
+            "token": "digits",
+            "match": "4",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "4"
+            ]
+        },
+        " ",
+        {
+            "type": "list",
+            "token": "open",
+            "match": "[",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "[",
+                {
+                    "type": "digits",
+                    "token": "digits",
+                    "match": "5",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "5"
+                    ]
+                },
+                " ",
+                {
+                    "type": "list",
+                    "token": "open",
+                    "match": "[",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "[",
+                        {
+                            "type": "list",
+                            "token": "open",
+                            "match": "[",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "[",
+                                {
+                                    "type": "digits",
+                                    "token": "digits",
+                                    "match": "6",
+                                    "depth": 4,
+                                    "groups": [],
+                                    "list": [
+                                        "6"
+                                    ]
+                                },
+                                "]"
+                            ]
+                        },
+                        " ",
+                        {
+                            "type": "digits",
+                            "token": "digits",
+                            "match": "7",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "7"
+                            ]
+                        },
+                        "]"
+                    ]
+                },
+                " ",
+                {
+                    "type": "digits",
+                    "token": "digits",
+                    "match": "8",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "8"
+                    ]
+                },
+                "]"
+            ]
+        },
+        " ",
+        {
+            "type": "digits",
+            "token": "digits",
+            "match": "9",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "9"
+            ]
+        }
+    ]
+}

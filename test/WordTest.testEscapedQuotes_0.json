@@ -1,0 +1,380 @@
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        {
+            "type": "sentence",
+            "token": "char",
+            "match": "Lets",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "Lets",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "Lets"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "make",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "make"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "it",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "it"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "a",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "a"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "little",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "little"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "more",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "more"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "complicated",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "complicated"
+                    ]
+                },
+                ".",
+                {
+                    "type": "postfix",
+                    "token": "dot",
+                    "match": ".",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "sentence",
+            "token": "char",
+            "match": "This",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "This",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "This"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "sentence",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "sentence"
+                    ]
+                },
+                {
+                    "type": "space",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "quote",
+                    "token": "quote",
+                    "match": "\"",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "\"",
+                        {
+                            "type": "word",
+                            "token": "char",
+                            "match": "has",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "has"
+                            ]
+                        },
+                        {
+                            "type": "space",
+                            "token": "space",
+                            "match": " ",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                " "
+                            ]
+                        },
+                        {
+                            "type": "word",
+                            "token": "char",
+                            "match": "a",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "a"
+                            ]
+                        },
+                        {
+                            "type": "space",
+                            "token": "space",
+                            "match": " ",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                " "
+                            ]
+                        },
+                        "\\",
+                        {
+                            "type": "escape",
+                            "token": "any",
+                            "match": "\"",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "\""
+                            ]
+                        },
+                        {
+                            "type": "word",
+                            "token": "char",
+                            "match": "quote",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "quote"
+                            ]
+                        },
+                        "\\",
+                        {
+                            "type": "escape",
+                            "token": "any",
+                            "match": "\"",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "\""
+                            ]
+                        },
+                        {
+                            "type": "space",
+                            "token": "space",
+                            "match": " ",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                " "
+                            ]
+                        },
+                        {
+                            "type": "word",
+                            "token": "char",
+                            "match": "with",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "with"
+                            ]
+                        },
+                        {
+                            "type": "space",
+                            "token": "space",
+                            "match": " ",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                " "
+                            ]
+                        },
+                        {
+                            "type": "word",
+                            "token": "char",
+                            "match": "escaped",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "escaped"
+                            ]
+                        },
+                        {
+                            "type": "space",
+                            "token": "space",
+                            "match": " ",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                " "
+                            ]
+                        },
+                        {
+                            "type": "word",
+                            "token": "char",
+                            "match": "quotes",
+                            "depth": 3,
+                            "groups": [],
+                            "list": [
+                                "quotes"
+                            ]
+                        },
+                        "\""
+                    ]
+                },
+                {
+                    "type": "sentence",
+                    "token": "space",
+                    "match": " ",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        " "
+                    ]
+                },
+                {
+                    "type": "word",
+                    "token": "char",
+                    "match": "inside",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "inside"
+                    ]
+                },
+                ".",
+                {
+                    "type": "postfix",
+                    "token": "dot",
+                    "match": ".",
+                    "depth": 2,
+                    "groups": [],
+                    "list": []
+                }
+            ]
+        }
+    ]
+}

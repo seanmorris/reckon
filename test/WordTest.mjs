@@ -1,3 +1,4 @@
+import { compareSnapshot } from 'cv3-test/Snapshot.mjs';
 import { Test } from 'cv3-test/Test.mjs';
 import { INSERT, ENTER, LEAVE, IGNORE } from '../Actions.mjs';
 import { Parser } from '../Parser.mjs';
@@ -27,8 +28,8 @@ export class WordTest extends Test
 
 		const parser = new Parser(tokens, modes);
 
-		// console.error(JSON.stringify(parser.parse(words), null, 4));
-		// console.error(JSON.stringify(parser.parse(words2), null, 4));
+		this.assert(compareSnapshot(parser.parse(words)), 'Snapshot is invalid!');
+		this.assert(compareSnapshot(parser.parse(words2)), 'Snapshot is invalid!');
 	}
 
 	testPunctuation()
@@ -70,8 +71,9 @@ export class WordTest extends Test
 		}
 
 		const parser = new Parser(tokens, modes);
+		const parsed = JSON.stringify(parser.parse(words));
 
-		// console.error(JSON.stringify(parser.parse(words), ' ', 4));
+		this.assert(compareSnapshot(parsed), 'Snapshot is invalid!');
 	}
 
 	testQuotes()
@@ -141,6 +143,9 @@ export class WordTest extends Test
 		}
 
 		const parser = new Parser(tokens, modes);
+		const parsed = JSON.stringify(parser.parse(words));
+
+		this.assert(compareSnapshot(parsed), 'Snapshot is invalid!');
 
 		// console.error(JSON.stringify(parser.parse(words), ' ', 4));
 	}
@@ -148,8 +153,6 @@ export class WordTest extends Test
 	testEscapedQuotes()
 	{
 		const words = 'Lets make it a little more complicated. This sentence "has a \\"quote\\" with escaped quotes" inside.';
-
-		console.log(words);
 
 		const tokens = {
 			escape:   /\\/
@@ -228,22 +231,23 @@ export class WordTest extends Test
 		};
 
 		const parser = new Parser(tokens, modes);
-		const parsed = parser.parse(words);
 
-		console.error(JSON.stringify(parsed, ' ', 4));
+		this.assert(compareSnapshot(parser.parse(words)), 'Snapshot is invalid!');
 
-		console.error(words);
-		console.error(parsed.toString());
+		// console.error(JSON.stringify(parsed, ' ', 4));
 
-		console.error(parsed.list[0].toString());
-		console.error(parsed.list[1].toString());
+		// console.error(words);
+		// console.error(parsed.toString());
 
-		console.error(parsed.list[1].list[0].toString());
-		console.error(parsed.list[1].list[1].toString());
-		console.error(parsed.list[1].list[2].toString());
-		console.error(parsed.list[1].list[3].toString());
-		console.error(parsed.list[1].list[4].toString());
-		console.error(parsed.list[1].list[5].toString());
-		console.error(parsed.list[1].list[6].toString());
+		// console.error(parsed.list[0].toString());
+		// console.error(parsed.list[1].toString());
+
+		// console.error(parsed.list[1].list[0].toString());
+		// console.error(parsed.list[1].list[1].toString());
+		// console.error(parsed.list[1].list[2].toString());
+		// console.error(parsed.list[1].list[3].toString());
+		// console.error(parsed.list[1].list[4].toString());
+		// console.error(parsed.list[1].list[5].toString());
+		// console.error(parsed.list[1].list[6].toString());
 	}
 }

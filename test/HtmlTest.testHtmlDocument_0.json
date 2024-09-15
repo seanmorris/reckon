@@ -1,0 +1,98 @@
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        "\n\t\t\t",
+        {
+            "type": "tag",
+            "token": "startOpenTag",
+            "match": "<html",
+            "depth": 1,
+            "groups": [
+                "html"
+            ],
+            "list": [
+                {
+                    "type": "normal",
+                    "token": "endTag",
+                    "match": ">",
+                    "depth": 2,
+                    "groups": [],
+                    "list": [
+                        "\n\t\t\t\t",
+                        {
+                            "type": "tag",
+                            "token": "startOpenTag",
+                            "match": "<head",
+                            "depth": 3,
+                            "groups": [
+                                "head"
+                            ],
+                            "list": [
+                                {
+                                    "type": "normal",
+                                    "token": "endTag",
+                                    "match": ">",
+                                    "depth": 4,
+                                    "groups": [],
+                                    "list": [
+                                        "\n\t\t\t\t\t",
+                                        {
+                                            "type": "tag",
+                                            "token": "startOpenTag",
+                                            "match": "<title",
+                                            "depth": 5,
+                                            "groups": [
+                                                "title"
+                                            ],
+                                            "list": [
+                                                {
+                                                    "type": "normal",
+                                                    "token": "endTag",
+                                                    "match": ">",
+                                                    "depth": 6,
+                                                    "groups": [],
+                                                    "list": [
+                                                        "This is the title"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "\n\t\t\t\t"
+                                    ]
+                                }
+                            ]
+                        },
+                        "\n\t\t\t\t",
+                        {
+                            "type": "tag",
+                            "token": "startOpenTag",
+                            "match": "<body",
+                            "depth": 3,
+                            "groups": [
+                                "body"
+                            ],
+                            "list": [
+                                {
+                                    "type": "normal",
+                                    "token": "endTag",
+                                    "match": ">",
+                                    "depth": 4,
+                                    "groups": [],
+                                    "list": [
+                                        "\n\t\t\t\t\tThis is some body text.\n\t\t\t\t"
+                                    ]
+                                }
+                            ]
+                        },
+                        "\n\t\t\t"
+                    ]
+                }
+            ]
+        },
+        "\n\t\t"
+    ]
+}

@@ -4,7 +4,7 @@
 	"author": "Parser library inspired by Perl 6 Grammars",
 	"license": "Apache-2.0",
 	"scripts": {
-		"test": "npx cvtest test/WordTest.mjs"
+		"test": "npx cvtest test/*.mjs"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.12.1",
@@ -18,7 +18,7 @@
 		"clean-css-brunch": "^3",
 		"raw-brunch": "^1.0.2",
 		"terser-brunch": "^4",
-		"cv3-test": "^0.1.1"
+		"cv3-test": "^0.1.2"
 	},
 	"files": [
 		"dist/sixgram.js",

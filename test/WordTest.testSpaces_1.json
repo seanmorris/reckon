@@ -1,0 +1,98 @@
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        "    ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "These",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "These"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "are",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "are"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "some",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "some"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "words",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "words"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "with",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "with"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "spaces",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "spaces"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "around",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "around"
+            ]
+        },
+        " ",
+        {
+            "type": "normal",
+            "token": "char",
+            "match": "them.",
+            "depth": 1,
+            "groups": [],
+            "list": [
+                "them."
+            ]
+        },
+        "    "
+    ]
+}

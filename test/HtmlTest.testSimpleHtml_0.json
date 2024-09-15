@@ -1,0 +1,57 @@
+{
+    "type": "normal",
+    "token": "normal",
+    "match": null,
+    "depth": 0,
+    "groups": [],
+    "list": [
+        "lorem ",
+        {
+            "type": "tag",
+            "token": "startOpenTag",
+            "match": "<B",
+            "depth": 1,
+            "groups": [
+                "B"
+            ],
+            "list": [
+                {
+                    "type": "attr",
+                    "token": "startAttr",
+                    "match": "disabled",
+                    "depth": 2,
+                    "groups": [
+                        "disabled"
+                    ],
+                    "list": [
+                        "disabled"
+                    ]
+                },
+                {
+                    "type": "attr",
+                    "token": "startAttr",
+                    "match": "id = ",
+                    "depth": 2,
+                    "groups": [
+                        "id"
+                    ],
+                    "list": [
+                        "id = ",
+                        "lol",
+                        {
+                            "type": "escape",
+                            "token": "escape",
+                            "match": "\\",
+                            "depth": 3,
+                            "groups": [],
+                            "list": []
+                        },
+                        "\"",
+                        "ESCAPED",
+                        ">ipsum</B> dolor sit amet"
+                    ]
+                }
+            ]
+        }
+    ]
+}
